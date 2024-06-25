@@ -65,7 +65,7 @@ export const ClusterUtilizationCard = ({
       {/* TODO (aguo): Handle grafana not running */}
       {grafanaHost === undefined || !prometheusHealth ? (
         <div className={classes.noGraph}>
-          <Typography variant="h3">Cluster utilization</Typography>
+          <Typography variant="h3">Crowd cluster utilization</Typography>
           <GrafanaNotRunningAlert className={classes.alert} severity="info" />
         </div>
       ) : (

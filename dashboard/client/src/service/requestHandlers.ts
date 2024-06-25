@@ -32,3 +32,6 @@ export const get = <T = any, R = AxiosResponse<T>>(
 ): Promise<R> => {
   return axios.get<T, R>(formatUrl(url), config);
 };
+
+// TODO: implement logic to enforce authentication for all requests here.
+
