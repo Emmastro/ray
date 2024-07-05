@@ -1,4 +1,4 @@
-import {get} from "./requestHandlers";
+import { get } from "./requestHandlers";
 
 type CMDRsp = {
   result: boolean;

@@ -9,7 +9,7 @@ const AxiosInterceptorSetup: React.FC = ({ children }) => {
     setupInterceptors(navigate);
   }, [navigate]);
 
-  return <>{children}</>;
+  return <React.Fragment>{children}</React.Fragment>;
 };
 
 export default AxiosInterceptorSetup;

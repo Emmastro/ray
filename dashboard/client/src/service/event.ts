@@ -1,5 +1,5 @@
 import { EventGlobalRsp, EventRsp } from "../type/event";
-import {get} from "./requestHandlers";
+import { get } from "./requestHandlers";
 
 export const getEvents = (jobId: string) => {
   if (jobId) {

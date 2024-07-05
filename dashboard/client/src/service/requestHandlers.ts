@@ -11,21 +11,19 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { NavigateFunction } from "react-router-dom";
 
-
 const axiosInstance = axios.create();
 
 // Set the Authorization header with the JWT token
 export const setAuthToken = (token: string | null) => {
   if (token) {
-    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
-    delete axiosInstance.defaults.headers.common['Authorization'];
+    delete axiosInstance.defaults.headers.common["Authorization"];
   }
 };
 
-
 // Initialize axios with token from localStorage
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 if (token) {
   setAuthToken(token);
 }
@@ -41,8 +39,8 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
     (error) => {
       console.log("Error in axios interceptor", error);
 
-       // If the response is unauthorized, and the request is not for login or registration, redirect to login
-       if (
+      // If the response is unauthorized, and the request is not for login or registration, redirect to login
+      if (
         error.response &&
         error.response.status === 401 &&
         !error.config.url.includes("login") &&
@@ -56,7 +54,6 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
     },
   );
 };
-
 
 /**
  * This function formats URLs such that the user's browser
@@ -87,7 +84,8 @@ export const post = <T = any, R = AxiosResponse<T>>(
   data?: any,
   config?: AxiosRequestConfig,
 ): Promise<R> => {
-  console.log(`URL posted: ${formatUrl(url)} - data  ${data} - config  ${config}`);
+  console.log(
+    `URL posted: ${formatUrl(url)} - data  ${data} - config  ${config}`,
+  );
   return axiosInstance.post<T, R>(formatUrl(url), data, config);
-}
-
+};
