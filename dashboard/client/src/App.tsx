@@ -54,6 +54,7 @@ import {
   ServeSystemDetailPage,
 } from "./pages/serve/ServeSystemDetailPage";
 import { TaskPage } from "./pages/task/TaskPage";
+
 import { getNodeList } from "./service/node";
 
 import { lightTheme } from "./theme";
@@ -131,9 +132,20 @@ const App = () => {
     dashboardDatasource: undefined,
   });
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const location = useLocation();
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/register";
+
+  useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    }, [location]);
 
   useEffect(() => {
     if (!isAuthPage) {
@@ -190,9 +202,11 @@ const App = () => {
             <Routes>
               {/* Redirect people hitting the /new path to root. TODO(aguo): Delete this redirect in ray 2.5 */}
               <Route element={<Navigate replace to="/" />} path="/new" />
+              <Route element={<LoginPage />} path="login" />
+              <Route element={<RegistrationPage />} path="register" />
+              {isAuthenticated && (
               <Route element={<MainNavLayout />} path="/">
-                <Route element={<LoginPage />} path="login" />
-                <Route element={<RegistrationPage />} path="register" />
+                
                 <Route element={<Navigate replace to="overview" />} path="" />
                 <Route element={<OverviewPage />} path="overview" />
                 <Route element={<ClusterMainPageLayout />} path="cluster">
@@ -320,8 +334,11 @@ const App = () => {
                   <Route element={<StateApiLogsListPage />} path="" />
                   <Route element={<StateApiLogViewerPage />} path="viewer" />
                 </Route>
+                {/* <Route element={<LogoutPage/> } path="logout" /> */}
               </Route>
+               )}
               <Route element={<CMDResult />} path="/cmd/:cmd/:ip/:pid" />
+             
             </Routes>
           </GlobalContext.Provider>
         </Suspense>

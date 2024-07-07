@@ -1,13 +1,14 @@
-import { IconButton, Tooltip, Typography } from "@mui/material";
+import { Button, IconButton, Tooltip, Typography } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import classNames from "classnames";
 import React, { useContext } from "react";
 import { RiBookMarkLine, RiFeedbackLine } from "react-icons/ri/";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../App";
 import Logo from "../../logo.svg";
 import { MainNavContext, useMainNavState } from "./mainNavContext";
+import logout from "../../service/logout";
 
 export const MAIN_NAV_HEIGHT = 56;
 export const BREADCRUMBS_HEIGHT = 36;
@@ -170,11 +171,18 @@ const MainNavBar = () => {
   const { mainNavPageHierarchy } = useContext(MainNavContext);
   const rootRouteId = mainNavPageHierarchy[0]?.id;
   const { metricsContextLoaded, grafanaHost } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   let navItems = NAV_ITEMS;
   if (!metricsContextLoaded || grafanaHost === "DISABLED") {
     navItems = navItems.filter(({ id }) => id !== "metrics");
   }
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
 
   return (
     <div className={classes.root}>
@@ -217,6 +225,9 @@ const MainNavBar = () => {
             <RiFeedbackLine />
           </IconButton>
         </Tooltip>
+        <Button color="inherit" onClick={handleLogout}>
+          Logout
+        </Button>
       </div>
     </div>
   );
