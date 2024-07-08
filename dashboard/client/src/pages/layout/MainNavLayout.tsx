@@ -7,8 +7,8 @@ import { RiBookMarkLine, RiFeedbackLine } from "react-icons/ri/";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../App";
 import Logo from "../../logo.svg";
-import { MainNavContext, useMainNavState } from "./mainNavContext";
 import logout from "../../service/logout";
+import { MainNavContext, useMainNavState } from "./mainNavContext";
 
 export const MAIN_NAV_HEIGHT = 56;
 export const BREADCRUMBS_HEIGHT = 36;
@@ -182,7 +182,6 @@ const MainNavBar = () => {
     await logout();
     navigate("/login");
   };
-
 
   return (
     <div className={classes.root}>

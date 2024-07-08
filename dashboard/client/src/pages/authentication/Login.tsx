@@ -1,21 +1,20 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
+  Alert,
   Box,
   Button,
   Container,
   IconButton,
   InputAdornment,
+  Link,
   TextField,
   Typography,
-  Link,
-  Alert,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { post, setAuthToken } from "../../service/requestHandlers";
-
 
 // Define the structure of the expected error response
 type ErrorResponse = {
@@ -24,8 +23,7 @@ type ErrorResponse = {
       message?: string;
     };
   };
-}
-
+};
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   display: "flex",
@@ -56,7 +54,6 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
@@ -70,7 +67,9 @@ const LoginPage = () => {
       console.error("Error logging in", error);
 
       const typedError = error as ErrorResponse;
-      const errorMessage = typedError.response?.data?.message || "An error occurred. Please try again.";
+      const errorMessage =
+        typedError.response?.data?.message ||
+        "An error occurred. Please try again.";
       setErrorMessage(errorMessage);
     }
   };

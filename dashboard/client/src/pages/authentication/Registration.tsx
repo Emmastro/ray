@@ -1,4 +1,12 @@
-import { Alert, Box, Button, Container, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +51,7 @@ const RegistrationPage = () => {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
-      const response = await post("/register", { 
+      const response = await post("/register", {
         username,
         password,
         first_name: firstName,
@@ -52,7 +60,8 @@ const RegistrationPage = () => {
         gender,
         date_of_birth: dateOfBirth,
         country,
-        research_interests: researchInterests });
+        research_interests: researchInterests,
+      });
 
       const token = response.data.access_token;
       localStorage.setItem("token", token);
@@ -70,7 +79,7 @@ const RegistrationPage = () => {
         <Typography variant="h4" gutterBottom>
           Register
         </Typography>
-        
+
         <form onSubmit={handleSubmit}>
           <StyledTextField
             label="Username"
