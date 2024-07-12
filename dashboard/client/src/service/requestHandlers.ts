@@ -54,6 +54,14 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
   );
 };
 
+
+export const getBaseUrl = () => {
+  const { protocol, hostname, port } = window.location;
+  return `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+};
+
+
+// TODO: review this implementation
 /**
  * This function formats URLs such that the user's browser
  * sets the HTTP request's Request URL relative to the path at
@@ -64,7 +72,7 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
  * @return {String}    The reverse proxy compatible URL
  */
 export const formatUrl = (url: string): string => {
-  const baseUrl = "http://localhost:3000/";
+  const baseUrl = getBaseUrl();
 
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
