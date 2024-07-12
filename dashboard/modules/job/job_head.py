@@ -422,7 +422,7 @@ class JobHead(dashboard_utils.DashboardHeadModule):
             return Response(
                 status_code=400,
                 content="Please, authenticate and try again",
-                content_type="application/json"
+                content_type="application/json",
             )
 
         submission_jobs = await self._job_info_client.get_all_jobs(user_id=user_id)

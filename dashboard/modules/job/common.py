@@ -271,7 +271,9 @@ class JobInfoStorageClient:
         else:
             return job_info.status
 
-    async def get_all_jobs(self, timeout: int = 30, *args, **kwargs) -> Dict[str, JobInfo]:
+    async def get_all_jobs(
+        self, timeout: int = 30, *args, **kwargs
+    ) -> Dict[str, JobInfo]:
         raw_job_ids_with_prefixes = await self._gcs_aio_client.internal_kv_keys(
             self.JOB_DATA_KEY_PREFIX.encode(),
             namespace=ray_constants.KV_NAMESPACE_JOB,
@@ -284,7 +286,7 @@ class JobInfoStorageClient:
         # TODO: move this condition on the loop above
         if "user_id" in kwargs:
             job_ids_with_prefixes = [
-                i for i in job_ids_with_prefixes if i.endswith(f"-{kwargs["user_id"]}")
+                i for i in job_ids_with_prefixes if i.endswith(f"-{kwargs['user_id']}")
             ]
 
         job_ids = []
