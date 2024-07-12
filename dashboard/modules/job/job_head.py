@@ -416,7 +416,16 @@ class JobHead(dashboard_utils.DashboardHeadModule):
             self._dashboard_head.gcs_aio_client
         )
 
-        submission_jobs = await self._job_info_client.get_all_jobs()
+        user_id = req.headers.get("user_id")
+
+        if not user_id:
+            return Response(
+                status_code=400,
+                content="Please, authenticate and try again",
+                content_type="application/json"
+            )
+
+        submission_jobs = await self._job_info_client.get_all_jobs(user_id=user_id)
         submission_jobs = [
             JobDetails(
                 **dataclasses.asdict(job),

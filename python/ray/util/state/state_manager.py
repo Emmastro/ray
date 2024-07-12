@@ -334,6 +334,7 @@ class StateDataSourceClient:
         self, timeout: int = None
     ) -> Optional[GetAllNodeInfoReply]:
         request = GetAllNodeInfoRequest()
+        print("Node info request", request)
         reply = await self._gcs_node_info_stub.GetAllNodeInfo(request, timeout=timeout)
         return reply
 

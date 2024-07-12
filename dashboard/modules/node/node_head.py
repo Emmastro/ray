@@ -142,6 +142,7 @@ class NodeHead(dashboard_utils.DashboardHeadModule):
             A dict of information about the nodes in the cluster.
         """
         request = gcs_service_pb2.GetAllNodeInfoRequest()
+
         reply = await self._gcs_node_info_stub.GetAllNodeInfo(
             request, timeout=node_consts.GCS_RPC_TIMEOUT_SECONDS
         )

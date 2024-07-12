@@ -37,8 +37,6 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
       return response;
     },
     (error) => {
-      console.log("Error in axios interceptor", error);
-
       // If the response is unauthorized, and the request is not for login or registration, redirect to login
       if (
         error.response &&
@@ -49,6 +47,7 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
         console.log("current url", error.config.url);
         navigate("/register");
       }
+      console.log("Error in axios interceptor", error);
       // Return the error so the caller can handle it if necessary
       return Promise.reject(error);
     },
@@ -65,17 +64,24 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
  * @return {String}    The reverse proxy compatible URL
  */
 export const formatUrl = (url: string): string => {
-  if (url.startsWith("/")) {
-    return url.slice(1);
+
+  const baseUrl ="http://localhost:3000/";
+
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
   }
-  return url;
+
+  if (url.startsWith("/")) {
+
+    return `${baseUrl}${url.slice(1)}`;
+  }
+  return `${baseUrl}${url}`;
 };
 
 export const get = <T = any, R = AxiosResponse<T>>(
   url: string,
   config?: AxiosRequestConfig,
 ): Promise<R> => {
-  console.log(`URL fetched: ${formatUrl(url)} - config  ${config}`);
   return axiosInstance.get<T, R>(formatUrl(url), config);
 };
 

@@ -98,6 +98,7 @@ const LoginPage = () => {
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            name="username"
           />
           <StyledTextField
             label="Password"
@@ -107,6 +108,7 @@ const LoginPage = () => {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            name="password"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
