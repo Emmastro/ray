@@ -54,12 +54,10 @@ export const setupInterceptors = (navigate: NavigateFunction) => {
   );
 };
 
-
 export const getBaseUrl = () => {
   const { protocol, hostname, port } = window.location;
-  return `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+  return `${protocol}//${hostname}${port ? `:${port}` : ""}`;
 };
-
 
 // TODO: review this implementation
 /**
@@ -79,9 +77,9 @@ export const formatUrl = (url: string): string => {
   }
 
   if (url.startsWith("/")) {
-    return `${baseUrl}${url.slice(1)}`;
+    return `${baseUrl}/${url.slice(1)}`;
   }
-  return `${baseUrl}${url}`;
+  return `${baseUrl}/${url}`;
 };
 
 export const get = <T = any, R = AxiosResponse<T>>(
