@@ -164,6 +164,11 @@ const NAV_ITEMS = [
     path: "/logs",
     id: "logs",
   },
+  {
+    title: "Projects",
+    path: "/projects",
+    id: "projects",
+  },
 ];
 
 const MainNavBar = () => {
@@ -227,6 +232,7 @@ const MainNavBar = () => {
         <Button color="inherit" onClick={handleLogout}>
           Logout
         </Button>
+        
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export type Job = {
   isDead: boolean;
 };
 
-export type PythonDependenciey = string;
+export type PythonDependency = string;
 
 export type JavaDependency = {
   name: string;
@@ -35,7 +35,7 @@ export type JobInfo = {
   };
   jvmOptions: string;
   dependencies: {
-    python: PythonDependenciey[];
+    python: PythonDependency[];
     java: JavaDependency[];
   };
   driverStarted: boolean;

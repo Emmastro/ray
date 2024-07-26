@@ -33,6 +33,8 @@ import { ClusterDetailInfoPage } from "./pages/node/ClusterDetailInfoPage";
 import { ClusterLayout } from "./pages/node/ClusterLayout";
 import NodeDetailPage from "./pages/node/NodeDetail";
 import { OverviewPage } from "./pages/overview/OverviewPage";
+import ProjectList, { ProjectsLayout } from "./pages/projects";
+import ProjectDetailPage from "./pages/projects/ProjectDetail";
 import {
   ServeApplicationDetailLayout,
   ServeApplicationDetailPage,
@@ -336,7 +338,12 @@ const App = () => {
                     <Route element={<StateApiLogsListPage />} path="" />
                     <Route element={<StateApiLogViewerPage />} path="viewer" />
                   </Route>
-                  {/* <Route element={<LogoutPage/> } path="logout" /> */}
+                  <Route element={<ProjectsLayout />} path="projects">
+                    <Route element={<ProjectList />} path="" />
+                    <Route element={<ProjectDetailPage />} path=":id" />
+
+                    {/* TODO: add routes for project sub pages (viewing project details, creating new project, etc.) */}
+                  </Route>
                 </Route>
               )}
               <Route element={<CMDResult />} path="/cmd/:cmd/:ip/:pid" />
