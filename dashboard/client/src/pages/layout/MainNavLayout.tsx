@@ -232,7 +232,6 @@ const MainNavBar = () => {
         <Button color="inherit" onClick={handleLogout}>
           Logout
         </Button>
-        
       </div>
     </div>
   );

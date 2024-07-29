@@ -24,23 +24,16 @@ type ProjectRowProps = {
   project: UnifiedProject;
 };
 
-export const ProjectRow = ({project} : ProjectRowProps) => {
-  const {
-    project_id,
-    title,
-    description,
-    topic,
-    owner,
-    created_at,
-  } = project;
+export const ProjectRow = ({ project }: ProjectRowProps) => {
+  const { project_id, title, description, topic, owner, created_at } = project;
   const classes = useStyles();
 
   return (
     <TableRow>
       <TableCell align="center">
-          <Link component={RouterLink} to={project_id.toString()}>
-            {project_id}
-          </Link>
+        <Link component={RouterLink} to={project_id.toString()}>
+          {project_id}
+        </Link>
       </TableCell>
       <TableCell align="center">{title ?? "-"}</TableCell>
       <TableCell align="center">{topic ?? "-"}</TableCell>

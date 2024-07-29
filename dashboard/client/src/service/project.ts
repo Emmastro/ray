@@ -1,8 +1,4 @@
-import {
- ProjectListRsp,
- UnifiedProject,
-
-} from "../type/project";
+import { ProjectListRsp, UnifiedProject } from "../type/project";
 import { get } from "./requestHandlers";
 
 export const getProjectList = () => {
@@ -11,4 +7,4 @@ export const getProjectList = () => {
 
 export const getProjectDetail = (id: string) => {
   return get<UnifiedProject>(`api/projects/${id}`);
-}
+};

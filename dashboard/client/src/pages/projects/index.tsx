@@ -10,7 +10,6 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import Pagination from "@mui/material/Pagination";
 import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import { Outlet } from "react-router-dom";
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const columns = [
   { label: "Project ID" },
   { label: "Title" },
@@ -48,17 +46,12 @@ const columns = [
 
 const ProjectList = () => {
   const classes = useStyles();
-  const {
-    isLoading,
-    projectList,
-    page,
-    setPage,
-  } = useProjectList();
+  const { isLoading, projectList, page, setPage } = useProjectList();
 
   const {
     items: list,
-    constrainedPage,
-    maxPage,
+    // constrainedPage,
+    // maxPage,
   } = sliceToPage(projectList, page.pageNo, page.pageSize);
 
   return (
@@ -92,17 +85,17 @@ const ProjectList = () => {
                 ),
               }}
             />
-             <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  // TODO: open a modal form to create a new project
-                }}
-              >
-                Create New Project
-              </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                // TODO: open a modal form to create a new project
+              }}
+            >
+              Create New Project
+            </Button>
           </Box>
-          
+
           <Table>
             <TableHead>
               <TableRow>
@@ -122,9 +115,7 @@ const ProjectList = () => {
             <TableBody>
               {list.map((project, index) => {
                 const { project_id } = project;
-                return (
-                  <ProjectRow key={project_id} project={project} />
-                );
+                return <ProjectRow key={project_id} project={project} />;
               })}
             </TableBody>
           </Table>
