@@ -1,10 +1,10 @@
+import { Grid } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 
 import React from "react";
-import { useProjectDetail } from "./hook/useProjectDetail";
-import TitleCard from "../../components/TitleCard";
 import { StatusChip } from "../../components/StatusChip";
-import { Grid } from "@mui/material";
+import TitleCard from "../../components/TitleCard";
+import { useProjectDetail } from "./hook/useProjectDetail";
 
 
 

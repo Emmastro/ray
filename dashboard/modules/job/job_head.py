@@ -430,9 +430,11 @@ class JobHead(dashboard_utils.DashboardHeadModule):
             JobDetails(
                 **dataclasses.asdict(job),
                 submission_id=submission_id,
-                job_id=submission_job_drivers.get(submission_id).id
-                if submission_id in submission_job_drivers
-                else None,
+                job_id=(
+                    submission_job_drivers.get(submission_id).id
+                    if submission_id in submission_job_drivers
+                    else None
+                ),
                 driver_info=submission_job_drivers.get(submission_id),
                 type=JobType.SUBMISSION,
             )

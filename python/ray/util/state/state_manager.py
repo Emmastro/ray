@@ -197,9 +197,9 @@ class StateDataSourceClient:
         # GetClusterInfo. In practice, this should not matter a lot until we see a
         # raylet ip != node manager ip case, which should break more thing than just
         # runtime env agent connectivity.
-        self._runtime_env_agent_addresses[
-            node_id
-        ] = f"http://{address}:{runtime_env_agent_port}"
+        self._runtime_env_agent_addresses[node_id] = (
+            f"http://{address}:{runtime_env_agent_port}"
+        )
         self._id_id_map.put(node_id, address)
 
     def unregister_raylet_client(self, node_id: str):
@@ -365,9 +365,11 @@ class StateDataSourceClient:
             JobDetails(
                 **dataclasses.asdict(job),
                 submission_id=submission_id,
-                job_id=submission_job_drivers.get(submission_id).id
-                if submission_id in submission_job_drivers
-                else None,
+                job_id=(
+                    submission_job_drivers.get(submission_id).id
+                    if submission_id in submission_job_drivers
+                    else None
+                ),
                 driver_info=submission_job_drivers.get(submission_id),
                 type=JobType.SUBMISSION,
             )
