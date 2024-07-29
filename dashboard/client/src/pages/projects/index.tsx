@@ -1,6 +1,12 @@
 import {
   Box,
   Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
   InputAdornment,
   Table,
   TableBody,
@@ -11,12 +17,13 @@ import {
   TextField,
 } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { sliceToPage } from "../../common/util";
 import Loading from "../../components/Loading";
 import { SearchInput } from "../../components/SearchComponent";
 import TitleCard from "../../components/TitleCard";
+import { post } from "../../service/requestHandlers";
 import { MainNavPageInfo } from "../layout/mainNavContext";
 // TODO: Make the job page hooks general purpose so it can be used for the project page as well
 import { useProjectList } from "./hook/useProjectList";
@@ -46,6 +53,14 @@ const columns = [
 
 const ProjectList = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [projectTitle, setProjecTitle] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const [projectTopic, setProjectTopic] = useState("");
+  const [projectIsPublic, setProjectIsPublic] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const { isLoading, projectList, page, setPage } = useProjectList();
 
   const {
@@ -53,6 +68,25 @@ const ProjectList = () => {
     // constrainedPage,
     // maxPage,
   } = sliceToPage(projectList, page.pageNo, page.pageSize);
+
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    try {
+      const response = await post("/api/projects", {
+        title: projectTitle,
+        description: projectDescription,
+        topic: projectTopic,
+        is_public: projectIsPublic,
+      });
+
+      const project = response.data;
+      console.log("Project created:", project);
+
+      handleClose();
+    } catch (error) {
+      console.error("Error creating project", error);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -85,13 +119,7 @@ const ProjectList = () => {
                 ),
               }}
             />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                // TODO: open a modal form to create a new project
-              }}
-            >
+            <Button variant="contained" color="primary" onClick={handleOpen}>
               Create New Project
             </Button>
           </Box>
@@ -121,6 +149,53 @@ const ProjectList = () => {
           </Table>
         </TableContainer>
       </TitleCard>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Create New Project</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Title"
+            name="title"
+            fullWidth
+            margin="dense"
+            value={projectTitle}
+            onChange={(e) => setProjecTitle(e.target.value)}
+          />
+          <TextField
+            label="Description"
+            name="description"
+            fullWidth
+            margin="dense"
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
+          />
+          <TextField
+            label="Topic"
+            name="topic"
+            fullWidth
+            margin="dense"
+            value={projectTopic}
+            onChange={(e) => setProjectTopic(e.target.value)}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={projectIsPublic}
+                onChange={(e) => setProjectIsPublic(e.target.checked)}
+                name="isPublic"
+              />
+            }
+            label="Public"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} color="primary">
+            Create
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

@@ -25,7 +25,7 @@ export const useProjectList = () => {
         return rsp.data;
       }
     },
-    { refreshInterval: isRefreshing ? API_REFRESH_INTERVAL_MS * 100 : 0 },
+    { refreshInterval: isRefreshing ? API_REFRESH_INTERVAL_MS : 0 },
   );
 
   const projectList = data ?? [];
