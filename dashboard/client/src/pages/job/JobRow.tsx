@@ -44,6 +44,7 @@ export const JobRow = ({ job }: JobRowProps) => {
     start_time,
     end_time,
     entrypoint,
+    metadata,
   } = job;
   const { progress, error, driverExists } = useJobProgress(job_id ?? undefined);
   const classes = useStyles();
@@ -80,7 +81,14 @@ export const JobRow = ({ job }: JobRowProps) => {
           "(no ray driver)"
         )}
       </TableCell>
-      <TableCell align="center">{submission_id ?? "-"}</TableCell>
+      <TableCell align="center">
+        <Link
+          component={RouterLink}
+          to={`/projects/${metadata?.project_id}` ?? "-"}
+        >
+          {metadata?.project_id ?? "-"}
+        </Link>
+      </TableCell>
       <TableCell align="center">
         <Tooltip className={classes.overflowCell} title={entrypoint} arrow>
           <div>{entrypoint}</div>

@@ -32,7 +32,6 @@ export const useJobList = () => {
     "useJobList",
     async () => {
       const rsp = await getJobList();
-
       if (rsp) {
         setMsg("Fetched jobs");
         return rsp.data.sort(

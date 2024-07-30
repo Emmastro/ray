@@ -99,3 +99,14 @@ export const post = <T = any, R = AxiosResponse<T>>(
   );
   return axiosInstance.post<T, R>(formatUrl(url), data, config);
 };
+
+export const deleteRequest = <T = any, R = AxiosResponse<T>>(
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+): Promise<R> => {
+  console.log(
+    `URL posted: ${formatUrl(url)} - data  ${data} - config  ${config}`,
+  );
+  return axiosInstance.delete<T, R>(formatUrl(url), data);
+};

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import React, { useRef, useState } from "react";
 import useSWR from "swr";
@@ -12,7 +12,8 @@ import Loading from "../../components/Loading";
 import { StatusChip } from "../../components/StatusChip";
 import TitleCard from "../../components/TitleCard";
 import { getDataDatasets } from "../../service/data";
-import { NestedJobProgressLink } from "../../type/job";
+import { deleteRequest, post } from "../../service/requestHandlers";
+import { JobStatus, NestedJobProgressLink } from "../../type/job";
 import ActorList from "../actor/ActorList";
 import DataOverview from "../data/DataOverview";
 import { NodeCountCard } from "../overview/cards/NodeCountCard";
@@ -117,10 +118,47 @@ export const JobDetailChartsPage = () => {
     setActorListFilter(undefined);
   };
 
+  const stopJob = (jobId: any) => {
+    post(`/api/jobs/${jobId}/stop`, { submission_id: jobId });
+  };
+
+  const deleteJob = (jobId: any) => {
+    deleteRequest(`/api/jobs/${jobId}`, { submission_id: jobId });
+    // redirect to jobs
+    window.location.href = "/jobs";
+  };
+
   return (
     <div className={classes.root}>
       <JobMetadataSection job={job} />
-
+      {/* stop job button */}
+      <Box display="flex" justifyContent="flex-end">
+        {/* hide this if the job status is FINISHED */}
+        {job.status === JobStatus.RUNNING && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              console.log(`Job: ${job}`);
+              stopJob(job.submission_id);
+            }}
+          >
+            Stop Job
+          </Button>
+        )}
+        {job.status !== JobStatus.RUNNING && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              console.log(`Job: ${job}`);
+              deleteJob(job.submission_id);
+            }}
+          >
+            Delete Job
+          </Button>
+        )}
+      </Box>
       {data?.datasets && data.datasets.length > 0 && (
         <CollapsibleSection
           title="Ray Data Overview"

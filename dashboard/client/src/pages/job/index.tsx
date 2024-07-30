@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const columns = [
   { label: "Job ID" },
-  { label: "Submission ID" },
+  { label: "Project ID" },
   { label: "Entrypoint" },
   { label: "Status" },
   { label: "Status message" },
